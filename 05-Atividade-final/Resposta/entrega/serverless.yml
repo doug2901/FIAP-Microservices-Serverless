@@ -1,0 +1,31 @@
+service: resposta
+frameworkVersion: '3'
+provider:
+  name: aws
+  runtime: python3.9
+  iam:
+    role: !Sub arn:aws:iam::${AWS::AccountId}:role/LabRole
+  environment:
+    QUEUE_URL: !Sub https://sqs.${AWS::Region}.amazonaws.com/${AWS::AccountId}/FeedbacksReclamacoesQueue
+functions:
+  feedback:
+    handler: handler.feedback
+    events:
+      - http:
+          path: feedback
+          method: post
+          cors: true
+  create:
+    handler: handler.feedback
+    events:
+      - http:
+          path: posts/create
+          method: post
+          request:
+            schemas:
+              application/json: ${file(create_request.json)}
+  processar:
+    handler: processamento.handler
+    events:
+      - sqs:
+          arn: arn:aws:sqs:us-east-1:708096016377:FeedbacksReclamacoesQueue
