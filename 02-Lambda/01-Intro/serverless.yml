@@ -1,0 +1,15 @@
+service: teste
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.11
+  memorySize: 128
+  region: 'us-east-1'
+  timeout: 300
+  iam:
+    role: !Sub arn:aws:iam::${AWS::AccountId}:role/LabRole
+
+functions:
+  hello:
+    handler: handler.hello

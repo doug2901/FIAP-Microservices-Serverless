@@ -1,0 +1,17 @@
+service: sqstest
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.11
+  memorySize: 128
+  region: 'us-east-1'
+  timeout: 300
+  iam:
+    role: !Sub arn:aws:iam::${AWS::AccountId}:role/LabRole
+  environment:
+    sqs_url: https://sqs.us-east-1.amazonaws.com/708096016377/demoqueue
+    sqs_url_dest: https://sqs.us-east-1.amazonaws.com/708096016377/demoqueue_dest
+functions:
+  sqshandler:
+    handler: handler.handler

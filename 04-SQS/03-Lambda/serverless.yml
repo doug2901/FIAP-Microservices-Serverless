@@ -1,0 +1,20 @@
+service: sqstesttrigger
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.11
+  memorySize: 128
+  region: 'us-east-1'
+  iam:
+    role: !Sub arn:aws:iam::${AWS::AccountId}:role/LabRole
+
+functions:
+  sqsHandler:
+    handler: handler.handler
+    events:
+      - sqs:
+          arn:
+            arn:aws:sqs:us-east-1:708096016377:demoqueue
+          batchSize: 1
+          enabled: true

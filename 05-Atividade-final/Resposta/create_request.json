@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id_cliente": {
+      "type": "string"
+    },
+    "descricao": {
+      "type": "string"
+    },
+    "categoria": {
+      "type": "string",
+      "enum": [
+        "elogio",
+        "reclamação",
+        "sugestão"
+      ]
+    },
+    "data_hora": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id_cliente",
+    "descricao",
+    "categoria",
+    "data_hora"
+  ],
+  "additionalProperties": false
+}
